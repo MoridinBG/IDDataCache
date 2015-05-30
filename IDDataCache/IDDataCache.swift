@@ -9,7 +9,7 @@
 import Foundation
 import CommonCrypto
 
-enum IDDataCacheType
+public enum IDDataCacheType
 {
     case None
     case Disk
@@ -59,7 +59,7 @@ public class IDDataCache
     */
     static let sharedInstance = IDDataCache()
     
-    convenience init()
+    public convenience init()
     {
         self.init(namespace: "default")
     }
@@ -69,7 +69,7 @@ public class IDDataCache
     *
     * @param namespace The namespace to use for this cache store
     */
-    init(namespace: String)
+    public init(namespace: String)
     {
         let fullNamespace = "com.techlight.IDDataCache." + namespace
         memCache = NSCache()
@@ -86,9 +86,6 @@ public class IDDataCache
         }
         
         diskCachePath = makeDiskCachePath(fullNamespace)
-        
-        let notifCenter = NSNotificationCenter.defaultCenter()
-//        notifCenter.addObserver(self, selector: <#Selector#>, name: <#String?#>, object: <#AnyObject?#>)
     }
     
     public func makeDiskCachePath(fullNamespace: String) -> String
@@ -141,7 +138,7 @@ public class IDDataCache
     * @param key    The unique data cache key, usually it's data absolute URL
     * @param toDisk Store the data to disk cache if YES
     */
-    func storeData(data: NSData, forKey key:String, toDisk: Bool)
+    public func storeData(data: NSData, forKey key:String, toDisk: Bool)
     {
         let cost = IDCacheCostForData(data)
         self.memCache.setObject(data, forKey: key, cost: cost)
@@ -165,7 +162,7 @@ public class IDDataCache
     * @param data  The data to store
     * @param key   The unique data cache key, usually it's data absolute URL
     */
-    func storeData(data: NSData, forKey key:String)
+    public func storeData(data: NSData, forKey key:String)
     {
         storeData(data, forKey: key, toDisk: true)
     }
@@ -175,7 +172,7 @@ public class IDDataCache
     *
     * @param key The unique key used to store the wanted data object
     */
-    func queryDiskCacheForKey(key: String, done: (data: NSData, cacheType: IDDataCacheType) -> Void) -> NSOperation?
+    public func queryDiskCacheForKey(key: String, done: (data: NSData, cacheType: IDDataCacheType) -> Void) -> NSOperation?
     {
         // First check the in-memory cache...
         if let data = dataFromMemoryCacheForKey(key)
@@ -212,7 +209,7 @@ public class IDDataCache
     *
     * @param key The unique key used to store the wanted data object
     */
-    func dataFromMemoryCacheForKey(key: String) -> NSData?
+    public func dataFromMemoryCacheForKey(key: String) -> NSData?
     {
         return memCache.objectForKey(key) as? NSData
     }
@@ -222,7 +219,7 @@ public class IDDataCache
     *
     * @param key The unique key used to store the wanted data object
     */
-    func dataFromDiskCacheForKey(key: String) -> NSData?
+    public func dataFromDiskCacheForKey(key: String) -> NSData?
     {
         // First check the in-memory cache...
         if let data = dataFromMemoryCacheForKey(key)
@@ -246,7 +243,7 @@ public class IDDataCache
     *
     * @param key The unique data object cache key
     */
-    func removeDataForKey(key: String)
+    public func removeDataForKey(key: String)
     {
         removeDataForKey(key, completion: nil)
     }
@@ -258,7 +255,7 @@ public class IDDataCache
     * @param key             The unique data object cache key
     * @param completion      An block that should be executed after the data object has been removed (optional)
     */
-    func removeDataForKey(key: String, completion: (() -> Void)?)
+    public func removeDataForKey(key: String, completion: (() -> Void)?)
     {
         removeDataForKey(key, fromDisk: true, completion: completion)
     }
@@ -269,7 +266,7 @@ public class IDDataCache
     * @param key      The unique data object cache key
     * @param fromDisk Also remove cache entry from disk if YES
     */
-    func removeDataForKey(key: String, fromDisk: Bool)
+    public func removeDataForKey(key: String, fromDisk: Bool)
     {
         removeDataForKey(key, fromDisk: fromDisk, completion: nil)
     }
@@ -281,7 +278,7 @@ public class IDDataCache
     * @param fromDisk        Also remove cache entry from disk if YES
     * @param completion      An block that should be executed after the data object has been removed (optional)
     */
-    func removeDataForKey(key: String, fromDisk: Bool, completion: (() -> Void)?)
+    public func removeDataForKey(key: String, fromDisk: Bool, completion: (() -> Void)?)
     {
         memCache.removeObjectForKey(key)
         
@@ -306,7 +303,7 @@ public class IDDataCache
     /**
     * Clear all memory cached data objects
     */
-    func clearMemory()
+    public func clearMemory()
     {
         memCache.removeAllObjects()
     }
@@ -315,7 +312,7 @@ public class IDDataCache
     * Clear all disk cached data objects. Non-blocking method - returns immediately.
     * @param completion    An block that should be executed after cache expiration completes (optional)
     */
-    func clearDiskWithCompletion(completion: (() -> Void)?)
+    public func clearDiskWithCompletion(completion: (() -> Void)?)
     {
         dispatch_async(ioQueue) {
             self.fileManager.removeItemAtPath(self.diskCachePath, error: nil)
@@ -334,7 +331,7 @@ public class IDDataCache
     * Clear all disk cached data objects
     * @see clearDiskOnCompletion:
     */
-    func clearDisk()
+    public func clearDisk()
     {
         clearDiskWithCompletion(nil)
     }
@@ -343,7 +340,7 @@ public class IDDataCache
     * Remove all expired cached data objects from disk. Non-blocking method - returns immediately.
     * @param completionBlock An block that should be executed after cache expiration completes (optional)
     */
-    func cleanDiskWithCompletionBlock(completion: (() -> Void)?)
+    public func cleanDiskWithCompletionBlock(completion: (() -> Void)?)
     {
         dispatch_async(ioQueue) {
             let diskCacheURL = NSURL(fileURLWithPath: self.diskCachePath, isDirectory: true)!
@@ -445,7 +442,7 @@ public class IDDataCache
     * Remove all expired cached data objects from disk
     * @see cleanDiskWithCompletionBlock:
     */
-    func cleanDisk()
+    public func cleanDisk()
     {
         cleanDiskWithCompletionBlock(nil)
     }
@@ -473,7 +470,7 @@ public class IDDataCache
     /**
     * Get the number of data objects in the disk cache
     */
-    func getDiskCount() -> Int
+    public func getDiskCount() -> Int
     {
         var count = 0
         dispatch_sync(ioQueue) {
@@ -487,7 +484,7 @@ public class IDDataCache
     /**
     * Asynchronously calculate the disk cache's size.
     */
-    func calculateSizeWithCompletionBlock(completion: (fileCount: Int, totalSize: Int) -> Void)
+    public func calculateSizeWithCompletionBlock(completion: (fileCount: Int, totalSize: Int) -> Void)
     {
         let diskCacheURL = NSURL(fileURLWithPath: diskCachePath, isDirectory: true)
         dispatch_async(ioQueue) {
@@ -519,7 +516,7 @@ public class IDDataCache
     *
     *  @return YES if an data object exists for the given key
     */
-    func diskDataExistsWithKey(key: String) -> Bool
+    public func diskDataExistsWithKey(key: String) -> Bool
     {
         // this is an exception to access the filemanager on another queue than ioQueue, but we are using the shared instance
         // from apple docs on NSFileManager: The methods of the shared NSFileManager object can be called from multiple threads safely.
@@ -533,7 +530,7 @@ public class IDDataCache
     *  @param completionBlock the block to be executed when the check is done.
     *  @note the completion block will be always executed on the main queue
     */
-    func diskDataExistsWithKey(key: String, completion: (isInCache: Bool) -> Void)
+    public func diskDataExistsWithKey(key: String, completion: (isInCache: Bool) -> Void)
     {
         dispatch_async(ioQueue) {
             let exists = self.fileManager.fileExistsAtPath(self.defaultCachePathForKey(key))

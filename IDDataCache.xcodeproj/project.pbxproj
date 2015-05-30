@@ -21,11 +21,30 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0017C6D11B1A3991000709DB /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0089F04D1B19DC02003DF759 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		0089F0691B19DCC3003DF759 /* iphoneos.modulemap in Sources */ = {isa = PBXBuildFile; fileRef = 0089F0671B19DCC3003DF759 /* iphoneos.modulemap */; };
+		0089F06A1B19DCC3003DF759 /* iphonesimulator.modulemap in Sources */ = {isa = PBXBuildFile; fileRef = 0089F0681B19DCC3003DF759 /* iphonesimulator.modulemap */; };
 		00BEF8CB1B18B18700FBB93D /* IDDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 00BEF8CA1B18B18700FBB93D /* IDDataCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		00BEF8E71B18B50500FBB93D /* IDDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BEF8E61B18B50500FBB93D /* IDDataCache.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0089F06D1B19DD4A003DF759 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00BEF8BC1B18B18700FBB93D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0089F04C1B19DC02003DF759;
+			remoteInfo = CommonCrypto;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0089F04D1B19DC02003DF759 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0089F0501B19DC02003DF759 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0089F0661B19DC46003DF759 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = CommonCrypto.xcconfig; path = CommonCrypto/CommonCrypto.xcconfig; sourceTree = "<group>"; };
+		0089F0671B19DCC3003DF759 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
+		0089F0681B19DCC3003DF759 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
+		0089F06B1B19DD39003DF759 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		00BEF8C51B18B18700FBB93D /* IDDataCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IDDataCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BEF8C91B18B18700FBB93D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00BEF8CA1B18B18700FBB93D /* IDDataCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDDataCache.h; sourceTree = "<group>"; };
@@ -33,20 +52,49 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00BEF8C11B18B18700FBB93D /* Frameworks */ = {
+		0089F0491B19DC02003DF759 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		00BEF8C11B18B18700FBB93D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0017C6D11B1A3991000709DB /* CommonCrypto.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0089F04E1B19DC02003DF759 /* CommonCrypto */ = {
+			isa = PBXGroup;
+			children = (
+				0089F04F1B19DC02003DF759 /* Supporting Files */,
+			);
+			path = CommonCrypto;
+			sourceTree = "<group>";
+		};
+		0089F04F1B19DC02003DF759 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0089F0671B19DCC3003DF759 /* iphoneos.modulemap */,
+				0089F0681B19DCC3003DF759 /* iphonesimulator.modulemap */,
+				0089F0501B19DC02003DF759 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		00BEF8BB1B18B18700FBB93D = {
 			isa = PBXGroup;
 			children = (
+				0089F06B1B19DD39003DF759 /* libcommonCrypto.dylib */,
+				0089F0661B19DC46003DF759 /* CommonCrypto.xcconfig */,
 				00BEF8C71B18B18700FBB93D /* IDDataCache */,
+				0089F04E1B19DC02003DF759 /* CommonCrypto */,
 				00BEF8C61B18B18700FBB93D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				00BEF8C51B18B18700FBB93D /* IDDataCache.framework */,
+				0089F04D1B19DC02003DF759 /* CommonCrypto.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +129,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		0089F04A1B19DC02003DF759 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00BEF8C21B18B18700FBB93D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,6 +147,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0089F04C1B19DC02003DF759 /* CommonCrypto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0089F0641B19DC03003DF759 /* Build configuration list for PBXNativeTarget "CommonCrypto" */;
+			buildPhases = (
+				0089F0481B19DC02003DF759 /* Sources */,
+				0089F0491B19DC02003DF759 /* Frameworks */,
+				0089F04A1B19DC02003DF759 /* Headers */,
+				0089F04B1B19DC02003DF759 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CommonCrypto;
+			productName = CommonCrypto;
+			productReference = 0089F04D1B19DC02003DF759 /* CommonCrypto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		00BEF8C41B18B18700FBB93D /* IDDataCache */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00BEF8DB1B18B18700FBB93D /* Build configuration list for PBXNativeTarget "IDDataCache" */;
@@ -103,6 +177,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0089F06E1B19DD4A003DF759 /* PBXTargetDependency */,
 			);
 			name = IDDataCache;
 			productName = IDDataCache;
@@ -118,6 +193,9 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = TechLight;
 				TargetAttributes = {
+					0089F04C1B19DC02003DF759 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
 					00BEF8C41B18B18700FBB93D = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
@@ -140,11 +218,19 @@
 			targets = (
 				00BEF8C41B18B18700FBB93D /* IDDataCache */,
 				00BEF8E11B18B35400FBB93D /* IDDataCache-Universal */,
+				0089F04C1B19DC02003DF759 /* CommonCrypto */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0089F04B1B19DC02003DF759 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00BEF8C31B18B18700FBB93D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -171,6 +257,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0089F0481B19DC02003DF759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0089F06A1B19DCC3003DF759 /* iphonesimulator.modulemap in Sources */,
+				0089F0691B19DCC3003DF759 /* iphoneos.modulemap in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00BEF8C01B18B18700FBB93D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -181,7 +276,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0089F06E1B19DD4A003DF759 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0089F04C1B19DC02003DF759 /* CommonCrypto */;
+			targetProxy = 0089F06D1B19DD4A003DF759 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		0089F0601B19DC03003DF759 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0089F0661B19DC46003DF759 /* CommonCrypto.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		0089F0611B19DC03003DF759 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0089F0661B19DC46003DF759 /* CommonCrypto.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		00BEF8D91B18B18700FBB93D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -219,7 +358,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -261,7 +400,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -283,6 +422,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -301,6 +444,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -323,6 +470,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0089F0641B19DC03003DF759 /* Build configuration list for PBXNativeTarget "CommonCrypto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0089F0601B19DC03003DF759 /* Debug */,
+				0089F0611B19DC03003DF759 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		00BEF8BF1B18B18700FBB93D /* Build configuration list for PBXProject "IDDataCache" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -24,6 +24,23 @@ public class IDDataCache
 {
     // MARK: - Properties
 
+    // MARK: Private
+    
+    /**
+    * Private properties
+    */
+    private let kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7
+    private var memCache: NSCache
+    private var diskCachePath: String = "" //This is needed so Xcode wouldn't complain about makeDiskCachePath being initialized before all properties
+    private var customPaths: Set<String>
+    private var fileManager: NSFileManager
+    private var ioQueue: dispatch_queue_t
+    
+    static private var sharedNamedInstances = [String : IDDataCache]()
+    static private var sharedNamedPersistentInstances = [String : IDDataCache]()
+    
+    // MARK: Public
+    
     /**
     * The maximum "total cost" of the in-memory data cache. The cost function is the number of bytes held in memory.
     */
@@ -44,20 +61,70 @@ public class IDDataCache
     */
     public var maxCacheSize: Int
     
-    
-    private let kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7
-    private var memCache: NSCache = NSCache()
-    private var diskCachePath: String = ""
-    private var customPaths: Set<String> = Set<String>()
-    private var fileManager: NSFileManager
-    private var ioQueue: dispatch_queue_t
+    /**
+    * If the cache should persist the files in Documents folder
+    */
+    public var isPersistent: Bool
     
     /**
     * Returns global shared cache instance
     *
     * @return IDDataCache global instance
     */
-    static let sharedInstance = IDDataCache()
+    static public let sharedInstance = IDDataCache()
+    
+    /**
+    * Returns the names of all the named Persistent caches in use
+    *
+    * @return [IDDataCache] all global persistent instances
+    */
+    static public var sharedPersistentInstanceNames: [String]
+    {
+        get
+        {
+            return sharedNamedPersistentInstances.keys.array
+        }
+    }
+    
+    // MARK: - Methods
+    
+    /**
+    * Returns global shared named cache instance
+    *
+    * @return IDDataCache global named instance
+    */
+    class  public func sharedNamedInstance(namespace: String) -> IDDataCache
+    {
+        if let instance = sharedNamedInstances[namespace]
+        {
+            return instance
+        } else
+        {
+            let instance = IDDataCache(namespace: namespace)
+            sharedNamedInstances[namespace] = instance
+            
+            return instance
+        }
+    }
+    
+    /**
+    * Returns global shared named persistent cache instance
+    *
+    * @return IDDataCache global named persistent instance
+    */
+    class  public func sharedNamedPersistentInstance(namespace: String) -> IDDataCache
+    {
+        if let instance = sharedNamedPersistentInstances[namespace]
+        {
+            return instance
+        } else
+        {
+            let instance = IDDataCache(namespace: namespace, isPersistent: true)
+            sharedNamedPersistentInstances[namespace] = instance
+            
+            return instance
+        }
+    }
     
     public convenience init()
     {
@@ -69,29 +136,44 @@ public class IDDataCache
     *
     * @param namespace The namespace to use for this cache store
     */
-    public init(namespace: String)
+    public convenience init(namespace: String)
+    {
+        self.init(namespace: namespace, isPersistent: false)
+    }
+    
+    public init(namespace: String, isPersistent: Bool)
     {
         let fullNamespace = "com.techlight.IDDataCache." + namespace
-        memCache = NSCache()
-        memCache.name = fullNamespace
+        self.memCache = NSCache()
+        self.memCache.name = fullNamespace
         
-        maxMemoryCost = 0
-        maxMemoryCountLimit = 0
-        maxCacheAge = kDefaultCacheMaxCacheAge
-        maxCacheSize = 0
-        ioQueue = dispatch_queue_create("com.techlight.IDDataCache", DISPATCH_QUEUE_SERIAL)
-        fileManager = NSFileManager() //This is needed so Xcode wouldn't complain about fileManager being used in the closure withour being initialized
+        self.maxMemoryCost = 0
+        self.maxMemoryCountLimit = 0
+        self.maxCacheAge = kDefaultCacheMaxCacheAge
+        self.maxCacheSize = 0
+        self.isPersistent = isPersistent
+        self.customPaths = Set<String>()
+        self.ioQueue = dispatch_queue_create("com.techlight.IDDataCache", DISPATCH_QUEUE_SERIAL)
+        self.fileManager = NSFileManager()
+        self.diskCachePath = makeDiskCachePath(fullNamespace)
         dispatch_async(ioQueue) {
             self.fileManager = NSFileManager()
         }
         
-        diskCachePath = makeDiskCachePath(fullNamespace)
     }
     
     public func makeDiskCachePath(fullNamespace: String) -> String
     {
-        let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true) as! [String]
-        return paths[0].stringByAppendingPathComponent(fullNamespace)
+        let paths: String
+        if !self.isPersistent
+        {
+            paths = (NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true) as! [String])[0]
+        } else
+        {
+            paths = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as! [String])[0]
+        }
+
+        return paths.stringByAppendingPathComponent(fullNamespace)
     }
     
     /**

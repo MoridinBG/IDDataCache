@@ -111,9 +111,9 @@
 		00BEF8C71B18B18700FBB93D /* IDDataCache */ = {
 			isa = PBXGroup;
 			children = (
+				00BEF8E61B18B50500FBB93D /* IDDataCache.swift */,
 				00BEF8CA1B18B18700FBB93D /* IDDataCache.h */,
 				00BEF8C81B18B18700FBB93D /* Supporting Files */,
-				00BEF8E61B18B50500FBB93D /* IDDataCache.swift */,
 			);
 			path = IDDataCache;
 			sourceTree = "<group>";

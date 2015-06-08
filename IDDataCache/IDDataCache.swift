@@ -398,7 +398,10 @@ public class IDDataCache
     {
         dispatch_async(ioQueue) {
             self.fileManager.removeItemAtPath(self.diskCachePath, error: nil)
-            self.fileManager.createDirectoryAtPath(self.diskCachePath, withIntermediateDirectories: true, attributes: nil, error: nil)
+            if(!self.isPersistent)
+            {
+                self.fileManager.createDirectoryAtPath(self.diskCachePath, withIntermediateDirectories: true, attributes: nil, error: nil)
+            }
             
             if let completion = completion
             {

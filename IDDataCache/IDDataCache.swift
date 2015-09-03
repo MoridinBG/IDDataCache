@@ -167,10 +167,10 @@ public class IDDataCache
         let paths: String
         if !self.isPersistent
         {
-            paths = (NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true) as! [String])[0]
+            paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0]
         } else
         {
-            paths = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as! [String])[0]
+            paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         }
 
         return paths.stringByAppendingPathComponent(fullNamespace)
@@ -230,7 +230,12 @@ public class IDDataCache
             dispatch_async(ioQueue) {
                 if !self.fileManager.fileExistsAtPath(self.diskCachePath)
                 {
-                    self.fileManager.createDirectoryAtPath(self.diskCachePath, withIntermediateDirectories: false, attributes: nil, error: nil)
+                    do
+					{
+                        try self.fileManager.createDirectoryAtPath(self.diskCachePath, withIntermediateDirectories: false, attributes: nil)
+                    } catch _
+					{
+                    }
                 }
                 
                 self.fileManager.createFileAtPath(self.defaultCachePathForKey(key), contents: data, attributes: nil)
@@ -367,7 +372,12 @@ public class IDDataCache
         if fromDisk
         {
             dispatch_async(ioQueue) {
-                self.fileManager.removeItemAtPath(self.defaultCachePathForKey(key), error: nil)
+                do
+				{
+                    try self.fileManager.removeItemAtPath(self.defaultCachePathForKey(key))
+                } catch _
+				{
+                }
                 
                 if let completion = completion
                 {
@@ -397,10 +407,21 @@ public class IDDataCache
     public func clearDiskWithCompletion(completion: (() -> Void)?)
     {
         dispatch_async(ioQueue) {
-            self.fileManager.removeItemAtPath(self.diskCachePath, error: nil)
+            do
+			{
+                try self.fileManager.removeItemAtPath(self.diskCachePath)
+            } catch _
+			{
+            }
+			
             if(!self.isPersistent)
             {
-                self.fileManager.createDirectoryAtPath(self.diskCachePath, withIntermediateDirectories: true, attributes: nil, error: nil)
+                do
+				{
+                    try self.fileManager.createDirectoryAtPath(self.diskCachePath, withIntermediateDirectories: true, attributes: nil)
+                } catch _
+				{
+                }
             }
             
             if let completion = completion
@@ -428,7 +449,7 @@ public class IDDataCache
     public func cleanDiskWithCompletionBlock(completion: (() -> Void)?)
     {
         dispatch_async(ioQueue) {
-            let diskCacheURL = NSURL(fileURLWithPath: self.diskCachePath, isDirectory: true)!
+            let diskCacheURL = NSURL(fileURLWithPath: self.diskCachePath, isDirectory: true)
             let resourceKeys = [NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
             
             // This enumerator prefetches useful properties for our cache files.
@@ -474,7 +495,12 @@ public class IDDataCache
             
             for fileURL in urlsToDelete
             {
-                self.fileManager.removeItemAtURL(fileURL, error: nil)
+                do
+				{
+                    try self.fileManager.removeItemAtURL(fileURL)
+                } catch _
+				{
+                }
             }
             
             // If our remaining disk cache exceeds a configured maximum size, perform a second
@@ -486,12 +512,13 @@ public class IDDataCache
                 
                 // Sort the remaining cache files by their last modification time (oldest first).
                 var sortedFiles = [NSURL]()
-                let sortedKeyValues =  Array(cacheFiles).sorted({ (keyValue1, keyValue2) -> Bool in
+                let sortedKeyValues =  Array(cacheFiles).sort { (keyValue1, keyValue2) -> Bool in
                     let date1 = keyValue1.1[NSURLContentModificationDateKey] as! NSDate
                     let date2 = keyValue2.1[NSURLContentModificationDateKey] as! NSDate
                     
                     return date1.timeIntervalSinceReferenceDate > date2.timeIntervalSinceReferenceDate
-                })
+                }
+				
                 for (key, value) in sortedKeyValues
                 {
                     sortedFiles.append(key)
@@ -500,8 +527,8 @@ public class IDDataCache
                 
                 for fileURL in sortedFiles
                 {
-                    if self.fileManager.removeItemAtURL(fileURL, error: nil)
-                    {
+                    do {
+                        try self.fileManager.removeItemAtURL(fileURL)
                         let resourceValues = cacheFiles[fileURL]!
                         let totalAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey] as! Int
                         currentCacheSize -= totalAllocatedSize
@@ -510,6 +537,7 @@ public class IDDataCache
                         {
                             break
                         }
+                    } catch _ {
                     }
                 }
             }
@@ -544,7 +572,7 @@ public class IDDataCache
             {
                 let filename = fn as! String
                 let filePath = self.diskCachePath.stringByAppendingPathComponent(filename)
-                let attrs = NSFileManager.defaultManager().attributesOfItemAtPath(filePath, error: nil)!
+                let attrs = try! NSFileManager.defaultManager().attributesOfItemAtPath(filePath)
                 size += attrs[NSFileSize] as! Int
             }
         }
@@ -576,12 +604,17 @@ public class IDDataCache
             var fileCount = 0
             var totalSize = 0
             
-            let fileEnumerator = self.fileManager.enumeratorAtURL(diskCacheURL!, includingPropertiesForKeys: [NSFileSize], options: .SkipsHiddenFiles, errorHandler: nil)!
+            let fileEnumerator = self.fileManager.enumeratorAtURL(diskCacheURL, includingPropertiesForKeys: [NSFileSize], options: .SkipsHiddenFiles, errorHandler: nil)!
             for fileURL in fileEnumerator
             {
                 var fileSize: AnyObject?
                 let url = fileURL as! NSURL
-                url.getResourceValue(&fileSize, forKey: NSURLFileSizeKey, error: nil)
+                do
+				{
+                    try url.getResourceValue(&fileSize, forKey: NSURLFileSizeKey)
+                } catch _
+				{
+                }
                 if let size = fileSize as? Int
                 {
                     totalSize += size
@@ -630,7 +663,7 @@ public class IDDataCache
     private func backgroundCleanDisk()
     {
         //TODO: Implement me
-        println("backgroundCleanDisk() is Stub")
+        print("backgroundCleanDisk() is Stub")
 //        Class UIApplicationClass = NSClassFromString(@"UIApplication");
 //        if(!UIApplicationClass || ![UIApplicationClass respondsToSelector:@selector(sharedApplication)]) {
 //            return;

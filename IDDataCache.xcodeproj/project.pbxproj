@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		0017C6D11B1A3991000709DB /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0089F04D1B19DC02003DF759 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		0041B5431B991D1800AC3F9E /* XCGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041B5421B991D1800AC3F9E /* XCGLogger.swift */; settings = {ASSET_TAGS = (); }; };
 		0089F0691B19DCC3003DF759 /* iphoneos.modulemap in Sources */ = {isa = PBXBuildFile; fileRef = 0089F0671B19DCC3003DF759 /* iphoneos.modulemap */; };
 		0089F06A1B19DCC3003DF759 /* iphonesimulator.modulemap in Sources */ = {isa = PBXBuildFile; fileRef = 0089F0681B19DCC3003DF759 /* iphonesimulator.modulemap */; };
 		00BEF8CB1B18B18700FBB93D /* IDDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 00BEF8CA1B18B18700FBB93D /* IDDataCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0041B5421B991D1800AC3F9E /* XCGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCGLogger.swift; path = IDDataCache/XCGLogger.swift; sourceTree = "<group>"; };
 		0089F04D1B19DC02003DF759 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0089F0501B19DC02003DF759 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0089F0661B19DC46003DF759 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = CommonCrypto.xcconfig; path = CommonCrypto/CommonCrypto.xcconfig; sourceTree = "<group>"; };
@@ -49,6 +51,9 @@
 		00BEF8C91B18B18700FBB93D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00BEF8CA1B18B18700FBB93D /* IDDataCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDDataCache.h; sourceTree = "<group>"; };
 		00BEF8E61B18B50500FBB93D /* IDDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDDataCache.swift; sourceTree = "<group>"; };
+		387ECDD3B44C9F275C6545BC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		9590C85D7AB981B9AEB73F07 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A9D3CBFE9716F1C2DD81AAE9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,11 +96,14 @@
 		00BEF8BB1B18B18700FBB93D = {
 			isa = PBXGroup;
 			children = (
+				0041B5421B991D1800AC3F9E /* XCGLogger.swift */,
 				0089F06B1B19DD39003DF759 /* libcommonCrypto.dylib */,
 				0089F0661B19DC46003DF759 /* CommonCrypto.xcconfig */,
 				00BEF8C71B18B18700FBB93D /* IDDataCache */,
 				0089F04E1B19DC02003DF759 /* CommonCrypto */,
 				00BEF8C61B18B18700FBB93D /* Products */,
+				6542023AEB48C5D57B65CE89 /* Pods */,
+				963503386CE683CDB63ED838 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,6 +132,23 @@
 				00BEF8C91B18B18700FBB93D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6542023AEB48C5D57B65CE89 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				387ECDD3B44C9F275C6545BC /* Pods.debug.xcconfig */,
+				9590C85D7AB981B9AEB73F07 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		963503386CE683CDB63ED838 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9D3CBFE9716F1C2DD81AAE9 /* Pods.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +217,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = TechLight;
 				TargetAttributes = {
 					0089F04C1B19DC02003DF759 = {
@@ -272,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0041B5431B991D1800AC3F9E /* XCGLogger.swift in Sources */,
 				00BEF8E71B18B50500FBB93D /* IDDataCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +328,7 @@
 				INFOPLIST_FILE = CommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.techlight.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -318,6 +345,7 @@
 				INFOPLIST_FILE = CommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.techlight.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -345,6 +373,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -428,6 +457,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.techlight.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -450,6 +480,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.techlight.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
